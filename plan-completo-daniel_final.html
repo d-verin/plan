@@ -1,0 +1,2946 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan Integral — Daniel Verín</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f0e8;
+  --surface: #ede8df;
+  --card: #ffffff;
+  --border: #d8d2c8;
+  --accent: #c94f1a;
+  --accent2: #d4890a;
+  --accent3: #2a7a4b;
+  --text: #1a1814;
+  --muted: #8a8278;
+  --light: #f9f6f0;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--text);
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  height: 52px;
+  gap: 4px;
+}
+
+.nav-brand {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.2em;
+  color: var(--bg);
+  margin-right: auto;
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6a6560;
+  padding: 6px 14px;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover { color: var(--bg); background: rgba(255,255,255,0.08); }
+.nav-btn.active { color: var(--bg); background: var(--accent); }
+
+/* ─── PAGES ─── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ─── SHARED ─── */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 56px 28px 100px;
+}
+
+.page-hero {
+  margin-bottom: 56px;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border-bottom: 1.5px solid var(--accent);
+  padding-bottom: 3px;
+  margin-bottom: 18px;
+}
+
+.page-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 8vw, 88px);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.page-title em {
+  color: var(--accent);
+  font-style: normal;
+  display: block;
+}
+
+.page-desc {
+  margin-top: 18px;
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 560px;
+  line-height: 1.75;
+}
+
+.page-desc strong { color: var(--accent); font-weight: 500; }
+
+.section-label {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 26px;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  margin-bottom: 18px;
+}
+
+.block { margin-bottom: 48px; }
+
+/* ─── PAGE 1: PLANNING ─── */
+.timeline {
+  position: relative;
+  padding-left: 28px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--border);
+}
+
+.phase {
+  position: relative;
+  margin-bottom: 32px;
+}
+
+.phase::before {
+  content: '';
+  position: absolute;
+  left: -28px;
+  top: 8px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.phase-header {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.phase-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  background: rgba(201,79,26,0.1);
+  padding: 2px 10px;
+  border-radius: 2px;
+}
+
+.phase-dates {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+.phase-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  letter-spacing: 0.05em;
+  color: var(--text);
+}
+
+.phase-body {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 20px 24px;
+}
+
+.phase-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.phase-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.phase-stat-label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.phase-stat-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  line-height: 1;
+}
+
+.phase-stat-value.accent { color: var(--accent); }
+.phase-stat-value.green { color: var(--accent3); }
+
+.phase-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.phase-items li {
+  font-size: 13px;
+  color: var(--text);
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.phase-items li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 11px;
+}
+
+.phase-goal {
+  margin-top: 14px;
+  padding: 10px 14px;
+  background: rgba(201,79,26,0.06);
+  border-left: 2px solid var(--accent);
+  font-size: 13px;
+  color: var(--text);
+}
+
+.phase-goal strong { color: var(--accent); font-weight: 500; }
+
+/* Macro table */
+.macro-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.macro-table th {
+  background: var(--text);
+  color: var(--bg);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 400;
+}
+
+.macro-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+  background: var(--card);
+}
+
+.macro-table tr:hover td { background: var(--light); }
+
+.macro-table td:first-child { font-weight: 500; color: var(--text); }
+
+.day-tag {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+.day-cf { background: rgba(201,79,26,0.12); color: var(--accent); }
+.day-run { background: rgba(42,122,75,0.12); color: var(--accent3); }
+.day-rest { background: rgba(138,130,120,0.12); color: var(--muted); }
+
+.kcal-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bar-bg {
+  flex: 1;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+/* ─── PAGE 2: MENÚ SEMANAL ─── */
+.week-tabs {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 24px;
+  background: var(--surface);
+  padding: 4px;
+  border: 1px solid var(--border);
+  width: fit-content;
+}
+
+.week-tab {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 6px 14px;
+  transition: all 0.15s;
+}
+
+.week-tab.active {
+  background: var(--card);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.day-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.day-card {
+  background: var(--card);
+  padding: 20px;
+}
+
+.day-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.day-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  line-height: 1;
+}
+
+.day-type-badge {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+.meals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.meal-row {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.meal-time {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  padding-top: 1px;
+  font-weight: 500;
+}
+
+.meal-name {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.meal-macros {
+  display: flex;
+  gap: 6px;
+  margin-top: 3px;
+  flex-wrap: wrap;
+}
+
+.macro-chip {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+}
+
+.chip-kcal { background: rgba(201,79,26,0.1); color: var(--accent); }
+.chip-p { background: rgba(212,137,10,0.1); color: var(--accent2); }
+
+.day-total {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.day-total-label { color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; font-size: 10px; }
+.day-total-val { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.05em; color: var(--accent); }
+
+/* ─── PAGE 3: LISTA COMPRA ─── */
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.shop-category {
+  background: var(--card);
+  padding: 20px;
+}
+
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--accent);
+}
+
+.cat-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.cat-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  color: var(--text);
+}
+
+.shop-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shop-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.shop-check {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  background: var(--bg);
+}
+
+.shop-item.checked .shop-check {
+  background: var(--accent3);
+  border-color: var(--accent3);
+}
+
+.shop-item.checked .shop-check::after {
+  content: '✓';
+  font-size: 10px;
+  color: white;
+  font-weight: 700;
+}
+
+.shop-item-text {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.5;
+  transition: color 0.15s;
+}
+
+.shop-item.checked .shop-item-text {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.shop-item-qty {
+  font-size: 11px;
+  color: var(--muted);
+  display: block;
+  margin-top: 1px;
+}
+
+.shop-note {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--accent2);
+  font-style: italic;
+}
+
+.shop-progress {
+  position: sticky;
+  bottom: 0;
+  background: var(--text);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.shop-prog-label {
+  font-size: 12px;
+  color: #6a6560;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.shop-prog-bar {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.shop-prog-fill {
+  height: 100%;
+  background: var(--accent3);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.shop-prog-count {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  color: var(--bg);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.reset-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #6a6560;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.reset-btn:hover { color: var(--bg); border-color: rgba(255,255,255,0.3); }
+
+/* ─── PAGE 4: EMERGENCIA ─── */
+.emergency-top {
+  background: rgba(201,79,26,0.06);
+  border: 1px solid rgba(201,79,26,0.2);
+  border-left: 3px solid var(--accent);
+  padding: 16px 20px;
+  margin-bottom: 32px;
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.emergency-top strong { color: var(--accent); font-weight: 500; }
+
+.combo-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 32px;
+}
+
+.combo-card {
+  background: var(--card);
+  padding: 20px;
+}
+
+.combo-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 42px;
+  color: var(--border);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.combo-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.combo-foods {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+
+.combo-foods li {
+  font-size: 13px;
+  color: var(--muted);
+  padding-left: 14px;
+  position: relative;
+}
+
+.combo-foods li::before {
+  content: '·';
+  position: absolute;
+  left: 4px;
+  color: var(--accent);
+}
+
+.combo-totals {
+  display: flex;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.combo-total-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.combo-total-label {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.combo-total-val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  color: var(--text);
+  line-height: 1;
+}
+
+.combo-total-val.green { color: var(--accent3); }
+
+.stock-section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.stock-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stock-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--light);
+  border: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.stock-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+/* RULES */
+.rules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.rule-row {
+  background: var(--card);
+  padding: 18px 24px;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 16px;
+  align-items: start;
+  transition: background 0.15s;
+}
+
+.rule-row:hover { background: var(--light); }
+
+.rule-n {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  color: var(--border);
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.rule-row:hover .rule-n { color: var(--accent); }
+
+.rule-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.rule-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ─── FOOTER ─── */
+.page-footer {
+  margin-top: 72px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 700px) {
+  nav {
+    padding: 0 8px;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    height: 46px;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .nav-brand { display: none; }
+  .nav-btn {
+    padding: 8px 10px;
+    font-size: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border-radius: 0;
+  }
+  .container { padding: 28px 14px 80px; }
+  .page-title { font-size: 52px; }
+  .page-desc { font-size: 14px; }
+  .day-cards, .phase-grid, .shop-grid, .combo-cards, .stock-grid,
+  .check-grid, .bio-grid, .dash-grid, .emergency-grid { grid-template-columns: 1fr; }
+  .macro-table { font-size: 11px; }
+  .macro-table th, .macro-table td { padding: 8px; }
+  .kcal-bar { flex-direction: column; gap: 4px; }
+  .kcal-bar .bar-bg { width: 100%; }
+  .phase-header { flex-direction: column; gap: 4px; }
+  .phase-body { padding: 16px; }
+  .moment { grid-template-columns: 64px 1fr; gap: 12px; padding: 14px 16px; }
+  .moment-stats { display: none; }
+  .moment-time { font-size: 18px; }
+  .day-card { padding: 16px; }
+  .shop-progress { padding: 12px 14px; gap: 10px; }
+  .shop-prog-label { display: none; }
+  .reset-btn { padding: 4px 10px; font-size: 10px; }
+  .check-summary { padding: 12px 14px; gap: 10px; flex-wrap: wrap; }
+  .check-sum-msg { display: none; }
+  .check-reset-btn { padding: 4px 10px; font-size: 10px; }
+  .check-block { padding: 16px; }
+  .bio-card { padding: 16px; }
+  .bio-protocol { padding: 18px 16px; }
+  .bio-step { grid-template-columns: 48px 1fr; gap: 10px; }
+  .dash-card { padding: 16px; }
+  .dash-input { font-size: 22px; width: 80px; padding: 4px 8px; }
+  .energy-btn { width: 28px; height: 28px; font-size: 11px; }
+  .dash-log-table { font-size: 11px; }
+  .dash-log-table th, .dash-log-table td { padding: 8px; }
+  .rule-row { padding: 14px 16px; gap: 12px; }
+  .rule-n { font-size: 26px; width: 28px; }
+  .combo-card { padding: 16px; }
+  .week-tabs { width: 100%; }
+  .week-tab { flex: 1; text-align: center; }
+  .timeline { padding-left: 20px; }
+  .phase::before { left: -20px; }
+  .shop-category { padding: 16px; }
+  .batch-grid { grid-template-columns: 1fr; }
+  .batch-cell, .batch-header { padding: 10px 12px; }
+  .section-header { flex-wrap: wrap; gap: 6px; }
+  .phase-num { font-size: 11px; }
+  .phase-dates { font-size: 11px; }
+  .page-footer { flex-direction: column; gap: 6px; align-items: flex-start; font-size: 11px; }
+  .dash-history-header { flex-wrap: wrap; gap: 8px; }
+  .combo-totals { gap: 16px; }
+}
+
+/* ─── CHECKLIST ─── */
+.check-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+
+.check-block {
+  background: var(--card);
+  padding: 20px;
+}
+
+.check-block-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.check-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  padding: 8px 10px;
+  border-radius: 2px;
+  transition: background 0.15s;
+}
+
+.check-item:hover { background: var(--light); }
+
+.check-box {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  background: var(--bg);
+}
+
+.check-item.done .check-box {
+  background: var(--accent3);
+  border-color: var(--accent3);
+}
+
+.check-item.done .check-box::after {
+  content: '✓';
+  font-size: 11px;
+  color: white;
+  font-weight: 700;
+}
+
+.check-item-label {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.45;
+  transition: color 0.15s;
+}
+
+.check-item.done .check-item-label {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.check-item-sub {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+.check-summary {
+  background: var(--text);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.check-sum-label {
+  font-size: 11px;
+  color: #6a6560;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.check-sum-bar {
+  flex: 1;
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.check-sum-fill {
+  height: 100%;
+  background: var(--accent3);
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.check-sum-score {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px;
+  color: white;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  min-width: 60px;
+  text-align: right;
+}
+
+.check-sum-msg {
+  font-size: 12px;
+  color: #6a6560;
+  white-space: nowrap;
+}
+
+.check-reset-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #6a6560;
+  font-family: 'Instrument Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.check-reset-btn:hover { color: white; border-color: rgba(255,255,255,0.3); }
+
+/* ─── BIOHACKING ─── */
+.bio-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+
+.bio-card {
+  background: var(--card);
+  padding: 22px;
+}
+
+.bio-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+  line-height: 1;
+}
+
+.bio-card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.bio-time {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.bio-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 12px;
+}
+
+.bio-how {
+  font-size: 12px;
+  color: var(--text);
+  background: var(--light);
+  border-left: 2px solid var(--accent);
+  padding: 8px 12px;
+  line-height: 1.6;
+}
+
+.bio-protocol {
+  background: var(--text);
+  padding: 24px 28px;
+  margin-bottom: 28px;
+}
+
+.bio-protocol-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  color: var(--bg);
+  margin-bottom: 18px;
+}
+
+.bio-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bio-step {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 14px;
+  align-items: start;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.bio-step:last-child { border-bottom: none; padding-bottom: 0; }
+
+.bio-step-time {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+}
+
+.bio-step-text {
+  font-size: 13px;
+  color: rgba(245,240,232,0.8);
+  line-height: 1.55;
+}
+
+.bio-step-text strong {
+  color: var(--bg);
+  font-weight: 500;
+}
+
+.bio-note {
+  background: rgba(201,79,26,0.1);
+  border: 1px solid rgba(201,79,26,0.25);
+  border-left: 3px solid var(--accent);
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.bio-note strong { color: var(--accent); font-weight: 500; }
+
+/* ─── DASHBOARD ─── */
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+
+.dash-card {
+  background: var(--card);
+  padding: 20px;
+}
+
+.dash-card-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.dash-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.dash-input {
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28px;
+  color: var(--text);
+  width: 100px;
+  padding: 6px 10px;
+  letter-spacing: 0.05em;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.dash-input:focus { border-color: var(--accent); }
+
+.dash-unit {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.dash-delta {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.dash-delta.good { color: var(--accent3); }
+.dash-delta.bad { color: var(--accent); }
+
+.dash-energy {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.energy-btn {
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.energy-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+.energy-btn.selected { background: var(--accent2); border-color: var(--accent2); color: white; }
+
+.dash-prot-bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.dash-prot-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: width 0.4s ease;
+}
+
+.dash-prot-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.dash-log-btn {
+  width: 100%;
+  margin-top: 20px;
+  background: var(--text);
+  color: var(--bg);
+  border: none;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.15em;
+  padding: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dash-log-btn:hover { background: var(--accent); }
+
+.dash-history {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 0;
+  overflow: hidden;
+}
+
+.dash-history-header {
+  padding: 14px 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dash-history-clear {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--border);
+  padding: 3px 10px;
+  cursor: pointer;
+  font-family: 'Instrument Sans', sans-serif;
+  transition: all 0.15s;
+}
+
+.dash-history-clear:hover { color: var(--accent); border-color: var(--accent); }
+
+.dash-log-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.dash-log-table th {
+  padding: 10px 16px;
+  text-align: left;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  background: var(--light);
+  border-bottom: 1px solid var(--border);
+}
+
+.dash-log-table td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: middle;
+}
+
+.dash-log-table tr:last-child td { border-bottom: none; }
+.dash-log-table tr:hover td { background: var(--light); }
+
+.dash-empty {
+  padding: 32px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.dash-trend {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+.trend-down { background: rgba(42,122,75,0.12); color: var(--accent3); }
+.trend-up { background: rgba(201,79,26,0.1); color: var(--accent); }
+.trend-eq { background: rgba(138,130,120,0.1); color: var(--muted); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">Daniel Verín · 2026</div>
+  <button class="nav-btn active" onclick="showPage('planning', this)">Planning</button>
+  <button class="nav-btn" onclick="showPage('menu', this)">Menú</button>
+  <button class="nav-btn" onclick="showPage('compra', this)">Compra</button>
+  <button class="nav-btn" onclick="showPage('emergencia', this)">Emergencia</button>
+  <button class="nav-btn" onclick="showPage('checklist', this)">Checklist</button>
+  <button class="nav-btn" onclick="showPage('biohacking', this)">Biohacking</button>
+  <button class="nav-btn" onclick="showPage('dashboard', this)">Dashboard</button>
+</nav>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 1: PLANNING 3 MESES
+══════════════════════════════════════════════ -->
+<div id="page-planning" class="page active">
+<div class="container">
+  <div class="page-hero">
+    <div class="tag">Marzo – Junio 2026</div>
+    <div class="page-title">Planning<em>16 Semanas</em></div>
+    <p class="page-desc">
+      No 16 semanas en déficit lineal. Periodizamos para que el cuerpo no se adapte y tú no te quemes.
+      <strong>Objetivo: 90 → 85 kg sin perder músculo ni rendimiento.</strong>
+    </p>
+  </div>
+
+  <!-- FASES -->
+  <div class="block">
+    <div class="section-label">Periodización por fases</div>
+    <div class="timeline">
+
+      <div class="phase">
+        <div class="phase-header">
+          <span class="phase-num">FASE 01</span>
+          <span class="phase-name">Adaptación</span>
+          <span class="phase-dates">1 Mar → 22 Mar · 3 semanas</span>
+        </div>
+        <div class="phase-body">
+          <div class="phase-grid">
+            <div class="phase-stat">
+              <span class="phase-stat-label">Calorías</span>
+              <span class="phase-stat-value">2.000–2.200</span>
+            </div>
+            <div class="phase-stat">
+              <span class="phase-stat-label">Proteína</span>
+              <span class="phase-stat-value accent">175g / día</span>
+            </div>
+            <div class="phase-stat">
+              <span class="phase-stat-label">Déficit</span>
+              <span class="phase-stat-value">Mínimo</span>
+            </div>
+            <div class="phase-stat">
+              <span class="phase-stat-label">Prioridad</span>
+              <span class="phase-stat-value">Hábitos</span>
+            </div>
+          </div>
+          <ul class="phase-items">
+            <li>Subir calorías desde los niveles actuales (~1.370 real) hasta 2.100–2.200 de forma progresiva</li>
+            <li>Establecer batch cooking dominical como hábito irrompible</li>
+            <li>Fijar desayuno proteico, almuerzo Harvard y merienda pre-WOD</li>
+            <li>Activar journaling, meditación y digital sunset</li>
+            <li>Monitorizar HRV y FC reposo cada mañana</li>
+          </ul>
+          <div class="phase-goal"><strong>Meta:</strong> Estabilizar peso. Fijar los 3 rituales clave. Sin déficit real todavía.</div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header">
+          <span class="phase-num">FASE 02</span>
+          <span class="phase-name">Déficit Controlado</span>
+          <span class="phase-dates">23 Mar → 19 Abr · 4 semanas</span>
+        </div>
+        <div class="phase-body">
+          <div class="phase-grid">
+            <div class="phase-stat">
+              <span class="phase-stat-label">Calorías CF</span>
+              <span class="phase-stat-value">2.400</span>
+            </div>
+            <div class="phase-stat">
+              <span class="phase-stat-label">Calorías Rest.</span>
+              <span class="phase-stat-value">2.100</span>
+            </div>
+            <div class="phase-stat">
+              <span class="phase-stat-label">Déficit real</span>
+              <span class="phase-stat-value accent">400–500 kcal</span>
+            </div>
+            <div class="phase-stat">
+              <span class="phase-stat-label">Proteína</span>
+              <span class="phase-stat-value">175g / día</span>
+            </div>
+          </div>
+          <ul class="phase-items">
+            <li>Déficit real de ~400–500 kcal/día aplicando ciclado de carbos</li>
+            <li>Días CrossFit: 260g carbos · Días descanso/oficina: 180g carbos</li>
+            <li>Todos los rituales asentados — aquí empieza la pérdida de grasa real</li>
+            <li>Mantener o mejorar marcas en el box como señal de que va bien</li>
+            <li>Fotos de progreso + perímetro cintura al inicio y final de fase</li>
+          </ul>
+          <div class="phase-goal"><strong>Meta:</strong> Perder 1–1.5 kg. Llegar a ~88.5 kg. Cintura visiblemente reducida.</div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header">
+          <span class="phase-num">FASE 03</span>
+          <span class="phase-name">Aceleración</span>
+          <span class="phase-dates">20 Abr → 17 May · 4 semanas</span>
+        </div>
+        <div class="phase-body">
+          <div class="phase-grid">
+            <div class="phase-stat">
+              <span class="phase-stat-label">Calorías</span>
+              <span class="phase-stat-value">2.100–2.400</span>
+            </div>
+            <div class="phase-stat">
+              <span class="phase-stat-label">NEAT extra</span>
+              <span class="phase-stat-value accent">+30 min/día</span>
+            </div>
+            <div class="phase-stat">
+              <span class="phase-stat-label">Running</span>
+              <span class="phase-stat-value">40–50 min</span>
+            </div>
+            <div class="phase-stat">
+              <span class="phase-stat-label">Proteína</span>
+              <span class="phase-stat-value">175g / día</span>
+            </div>
+          </div>
+          <ul class="phase-items">
+            <li>Mantenemos déficit, pero aumentamos el gasto con NEAT y running más largo</li>
+            <li>Running sábado progresa de 40 a 50 min a ritmo zona 2</li>
+            <li>Caminata post-comida extendida a 20 min si el día lo permite</li>
+            <li>Si energía baja o HRV cae sostenido → reducir volumen, no calorías</li>
+          </ul>
+          <div class="phase-goal"><strong>Meta:</strong> Perder 1.5–2 kg más. Llegar a ~86.5–87 kg. Transición preparada.</div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-header">
+          <span class="phase-num">FASE 04</span>
+          <span class="phase-name">Refinamiento</span>
+          <span class="phase-dates">18 May → 14 Jun · 4 semanas</span>
+        </div>
+        <div class="phase-body">
+          <div class="phase-grid">
+            <div class="phase-stat">
+              <span class="phase-stat-label">Semana 1</span>
+              <span class="phase-stat-value green">Diet Break</span>
+            </div>
+            <div class="phase-stat">
+              <span class="phase-stat-label">Semanas 2–4</span>
+              <span class="phase-stat-value">Déficit suave</span>
+            </div>
+            <div class="phase-stat">
+              <span class="phase-stat-label">Kcal diet break</span>
+              <span class="phase-stat-value">2.400–2.600</span>
+            </div>
+            <div class="phase-stat">
+              <span class="phase-stat-label">Objetivo final</span>
+              <span class="phase-stat-value accent">85 kg</span>
+            </div>
+          </div>
+          <ul class="phase-items">
+            <li>Semana 1 (diet break): comer a mantenimiento, sin déficit — resetea leptina y cortisol</li>
+            <li>Semanas 2–4: déficit suave de 200–300 kcal para llegar a 85 kg sin pérdida muscular</li>
+            <li>Consolidar resultados y preparar transición a mantenimiento sin rebote</li>
+            <li>Analítica completa al final: testosterona, tiroides, vit D, hierro, B12</li>
+          </ul>
+          <div class="phase-goal"><strong>Meta:</strong> Llegar a ~85 kg. Cintura reducida. Rendimiento en máximos. Listo para mantenimiento.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TABLA MACROS SEMANALES -->
+  <div class="block">
+    <div class="section-label">Macros por día de la semana (fase 02–03)</div>
+    <table class="macro-table">
+      <thead>
+        <tr>
+          <th>Día</th>
+          <th>Tipo</th>
+          <th>Kcal</th>
+          <th>Proteína</th>
+          <th>Carbos</th>
+          <th>Grasa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Lunes</td>
+          <td><span class="day-tag day-cf">CF + Oficina</span></td>
+          <td>
+            <div class="kcal-bar">
+              <span>2.400</span>
+              <div class="bar-bg"><div class="bar-fill" style="width:100%"></div></div>
+            </div>
+          </td>
+          <td>175g</td><td>260g</td><td>70g</td>
+        </tr>
+        <tr>
+          <td>Martes</td>
+          <td><span class="day-tag day-cf">CF + Oficina</span></td>
+          <td>
+            <div class="kcal-bar">
+              <span>2.400</span>
+              <div class="bar-bg"><div class="bar-fill" style="width:100%"></div></div>
+            </div>
+          </td>
+          <td>175g</td><td>260g</td><td>70g</td>
+        </tr>
+        <tr>
+          <td>Miércoles</td>
+          <td><span class="day-tag day-rest">Oficina · Descanso</span></td>
+          <td>
+            <div class="kcal-bar">
+              <span>2.100</span>
+              <div class="bar-bg"><div class="bar-fill" style="width:87.5%"></div></div>
+            </div>
+          </td>
+          <td>175g</td><td>180g</td><td>75g</td>
+        </tr>
+        <tr>
+          <td>Jueves</td>
+          <td><span class="day-tag day-cf">CF + Teletrabajo</span></td>
+          <td>
+            <div class="kcal-bar">
+              <span>2.400</span>
+              <div class="bar-bg"><div class="bar-fill" style="width:100%"></div></div>
+            </div>
+          </td>
+          <td>175g</td><td>260g</td><td>70g</td>
+        </tr>
+        <tr>
+          <td>Viernes</td>
+          <td><span class="day-tag day-rest">Teletrabajo · Movilidad</span></td>
+          <td>
+            <div class="kcal-bar">
+              <span>2.100</span>
+              <div class="bar-bg"><div class="bar-fill" style="width:87.5%"></div></div>
+            </div>
+          </td>
+          <td>175g</td><td>180g</td><td>75g</td>
+        </tr>
+        <tr>
+          <td>Sábado</td>
+          <td><span class="day-tag day-run">Running Z2</span></td>
+          <td>
+            <div class="kcal-bar">
+              <span>2.250</span>
+              <div class="bar-bg"><div class="bar-fill" style="width:93.5%"></div></div>
+            </div>
+          </td>
+          <td>175g</td><td>220g</td><td>72g</td>
+        </tr>
+        <tr>
+          <td>Domingo</td>
+          <td><span class="day-tag day-rest">Descanso · Batch</span></td>
+          <td>
+            <div class="kcal-bar">
+              <span>2.100</span>
+              <div class="bar-bg"><div class="bar-fill" style="width:87.5%"></div></div>
+            </div>
+          </td>
+          <td>175g</td><td>180g</td><td>75g</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="page-footer">
+    <span>Plan Integral · Daniel Verín</span>
+    <span>Revisar progreso cada 2 semanas · Consistencia &gt; Perfección</span>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 2: MENÚ SEMANAL
+══════════════════════════════════════════════ -->
+<div id="page-menu" class="page">
+<div class="container">
+  <div class="page-hero">
+    <div class="tag">Rotación semanal</div>
+    <div class="page-title">Menú<em>Semanal</em></div>
+    <p class="page-desc">
+      Plantillas rotables. Cambia la proteína, el carbo y la verdura cada semana.
+      <strong>La estructura se repite — los ingredientes rotan.</strong>
+    </p>
+  </div>
+
+  <div class="week-tabs">
+    <button class="week-tab active" onclick="showWeek('a', this)">Semana A</button>
+    <button class="week-tab" onclick="showWeek('b', this)">Semana B</button>
+  </div>
+
+  <!-- SEMANA A -->
+  <div id="week-a" class="day-cards">
+
+    <div class="day-card">
+      <div class="day-card-header">
+        <div class="day-name">Lunes</div>
+        <span class="day-type-badge day-cf">CrossFit + Oficina</span>
+      </div>
+      <div class="meals-list">
+        <div class="meal-row">
+          <div class="meal-time">08:30</div>
+          <div>
+            <div class="meal-name">Bowl avena + whey + plátano + MdC</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">580 kcal</span><span class="macro-chip chip-p">42g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">13:00</div>
+          <div>
+            <div class="meal-name">Pechuga plancha + arroz basmati + ensalada grande</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">680 kcal</span><span class="macro-chip chip-p">52g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">17:00</div>
+          <div>
+            <div class="meal-name">2 tostadas + atún + ½ aguacate</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">410 kcal</span><span class="macro-chip chip-p">35g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">20:30</div>
+          <div>
+            <div class="meal-name">Salmón al horno + boniato + brócoli + AOVE</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">570 kcal</span><span class="macro-chip chip-p">46g P</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="day-total">
+        <div><div class="day-total-label">Total</div><div class="day-total-val">~2.400</div></div>
+        <div style="text-align:right"><div class="day-total-label">Proteína</div><div class="day-total-val">175g</div></div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-card-header">
+        <div class="day-name">Martes</div>
+        <span class="day-type-badge day-cf">CrossFit + Oficina</span>
+      </div>
+      <div class="meals-list">
+        <div class="meal-row">
+          <div class="meal-time">08:30</div>
+          <div>
+            <div class="meal-name">Bowl avena + whey + frutos rojos + nueces</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">560 kcal</span><span class="macro-chip chip-p">40g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">13:00</div>
+          <div>
+            <div class="meal-name">Salmón + arroz + ensalada mixta</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">680 kcal</span><span class="macro-chip chip-p">50g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">17:00</div>
+          <div>
+            <div class="meal-name">Tortitas arroz + pavo + queso fresco</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">400 kcal</span><span class="macro-chip chip-p">34g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">20:30</div>
+          <div>
+            <div class="meal-name">Merluza al horno + boniato + espinacas</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">520 kcal</span><span class="macro-chip chip-p">48g P</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="day-total">
+        <div><div class="day-total-label">Total</div><div class="day-total-val">~2.400</div></div>
+        <div style="text-align:right"><div class="day-total-label">Proteína</div><div class="day-total-val">172g</div></div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-card-header">
+        <div class="day-name">Miércoles</div>
+        <span class="day-type-badge day-rest">Oficina · Descanso</span>
+      </div>
+      <div class="meals-list">
+        <div class="meal-row">
+          <div class="meal-time">08:30</div>
+          <div>
+            <div class="meal-name">3 huevos revueltos + tostada + aguacate</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">440 kcal</span><span class="macro-chip chip-p">28g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">13:30</div>
+          <div>
+            <div class="meal-name">Pollo + quinoa + garbanzos + hojas verdes</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">580 kcal</span><span class="macro-chip chip-p">55g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">17:30</div>
+          <div>
+            <div class="meal-name">YoPRO + frutos rojos + nueces</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">270 kcal</span><span class="macro-chip chip-p">25g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">20:30</div>
+          <div>
+            <div class="meal-name">Pavo al horno + verduras + patata pequeña</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">430 kcal</span><span class="macro-chip chip-p">42g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">Snack</div>
+          <div>
+            <div class="meal-name">Scoop extra whey o lata atún</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">~200 kcal</span><span class="macro-chip chip-p">25g P</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="day-total">
+        <div><div class="day-total-label">Total</div><div class="day-total-val">~2.100</div></div>
+        <div style="text-align:right"><div class="day-total-label">Proteína</div><div class="day-total-val">175g</div></div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-card-header">
+        <div class="day-name">Jueves</div>
+        <span class="day-type-badge day-cf">CrossFit + Telework</span>
+      </div>
+      <div class="meals-list">
+        <div class="meal-row">
+          <div class="meal-time">08:30</div>
+          <div>
+            <div class="meal-name">Bowl avena + whey + plátano + MdC</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">580 kcal</span><span class="macro-chip chip-p">42g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">13:00</div>
+          <div>
+            <div class="meal-name">Ternera + arroz + verdura asada</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">690 kcal</span><span class="macro-chip chip-p">54g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">17:00</div>
+          <div>
+            <div class="meal-name">2 tostadas + atún + ½ aguacate</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">410 kcal</span><span class="macro-chip chip-p">35g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">20:30</div>
+          <div>
+            <div class="meal-name">Salmón + boniato + calabacín salteado</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">570 kcal</span><span class="macro-chip chip-p">46g P</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="day-total">
+        <div><div class="day-total-label">Total</div><div class="day-total-val">~2.400</div></div>
+        <div style="text-align:right"><div class="day-total-label">Proteína</div><div class="day-total-val">177g</div></div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-card-header">
+        <div class="day-name">Viernes</div>
+        <span class="day-type-badge day-rest">Teletrabajo · Movilidad</span>
+      </div>
+      <div class="meals-list">
+        <div class="meal-row">
+          <div class="meal-time">08:30</div>
+          <div>
+            <div class="meal-name">3 huevos + aguacate + tostada</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">440 kcal</span><span class="macro-chip chip-p">28g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">13:30</div>
+          <div>
+            <div class="meal-name">Sardinas + quinoa + tomate + aceitunas</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">560 kcal</span><span class="macro-chip chip-p">50g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">17:30</div>
+          <div>
+            <div class="meal-name">Yogur griego + plátano + almendras</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">300 kcal</span><span class="macro-chip chip-p">22g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">20:30</div>
+          <div>
+            <div class="meal-name">Merluza + patata + verdura al horno</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">430 kcal</span><span class="macro-chip chip-p">40g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">Snack</div>
+          <div>
+            <div class="meal-name">Lata atún + tortitas arroz</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">250 kcal</span><span class="macro-chip chip-p">28g P</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="day-total">
+        <div><div class="day-total-label">Total</div><div class="day-total-val">~2.100</div></div>
+        <div style="text-align:right"><div class="day-total-label">Proteína</div><div class="day-total-val">168g</div></div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-card-header">
+        <div class="day-name">Sábado</div>
+        <span class="day-type-badge day-run">Running Z2</span>
+      </div>
+      <div class="meals-list">
+        <div class="meal-row">
+          <div class="meal-time">08:30</div>
+          <div>
+            <div class="meal-name">Bowl avena + whey + fruta + MdC</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">560 kcal</span><span class="macro-chip chip-p">40g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">09:30</div>
+          <div>
+            <div class="meal-name">Running 40–50 min zona 2</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">-350 kcal</span><span class="macro-chip chip-p">gasto</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">13:30</div>
+          <div>
+            <div class="meal-name">Poke bowl salmón + arroz + verdura</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">650 kcal</span><span class="macro-chip chip-p">48g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">17:30</div>
+          <div>
+            <div class="meal-name">YoPRO + frutos rojos</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">190 kcal</span><span class="macro-chip chip-p">20g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">20:30</div>
+          <div>
+            <div class="meal-name">Pollo al horno + arroz + ensalada</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">620 kcal</span><span class="macro-chip chip-p">50g P</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="day-total">
+        <div><div class="day-total-label">Total</div><div class="day-total-val">~2.250</div></div>
+        <div style="text-align:right"><div class="day-total-label">Proteína</div><div class="day-total-val">170g</div></div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="day-card-header">
+        <div class="day-name">Domingo</div>
+        <span class="day-type-badge day-rest">Descanso · Batch</span>
+      </div>
+      <div class="meals-list">
+        <div class="meal-row">
+          <div class="meal-time">08:30</div>
+          <div>
+            <div class="meal-name">Huevos revueltos + aguacate + tostada</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">440 kcal</span><span class="macro-chip chip-p">28g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">11:00</div>
+          <div>
+            <div class="meal-name">🍳 BATCH COOKING · 60–90 min</div>
+            <div class="meal-macros"></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">13:30</div>
+          <div>
+            <div class="meal-name">Lentejas con verdura + pan integral</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">580 kcal</span><span class="macro-chip chip-p">38g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">17:30</div>
+          <div>
+            <div class="meal-name">Yogur griego + frutos secos + miel</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">290 kcal</span><span class="macro-chip chip-p">22g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">20:30</div>
+          <div>
+            <div class="meal-name">Merluza/pavo + boniato + verduras</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">450 kcal</span><span class="macro-chip chip-p">42g P</span></div>
+          </div>
+        </div>
+        <div class="meal-row">
+          <div class="meal-time">Snack</div>
+          <div>
+            <div class="meal-name">Lata atún o scoop proteína</div>
+            <div class="meal-macros"><span class="macro-chip chip-kcal">~200 kcal</span><span class="macro-chip chip-p">25g P</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="day-total">
+        <div><div class="day-total-label">Total</div><div class="day-total-val">~2.100</div></div>
+        <div style="text-align:right"><div class="day-total-label">Proteína</div><div class="day-total-val">155g+</div></div>
+      </div>
+    </div>
+
+  </div><!-- /week-a -->
+
+  <!-- SEMANA B (rotación de proteínas) -->
+  <div id="week-b" class="day-cards" style="display:none">
+    <div class="day-card" style="grid-column:1/-1; background: rgba(201,79,26,0.04); border: 1px dashed var(--border);">
+      <p style="font-size:13px; color: var(--muted); line-height:1.7; padding: 8px 4px;">
+        <strong style="color:var(--text)">Semana B — misma estructura, proteínas rotadas.</strong><br>
+        Lunes/Martes/Jueves: cambia pollo por ternera o atún · Salmón pasa a miércoles · Cena viernes: bacalao o gambas · Domingo almuerzo: garbanzos con espinacas. El resto de estructura es idéntica. Así evitas aburrirte y cubres distintos aminoácidos y micronutrientes.
+      </p>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Estructura estable · Ingredientes rotan</span>
+    <span>Batch cooking el domingo = semana resuelta</span>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 3: LISTA DE LA COMPRA
+══════════════════════════════════════════════ -->
+<div id="page-compra" class="page">
+<div class="container">
+  <div class="page-hero">
+    <div class="tag">Lista semanal</div>
+    <div class="page-title">Lista de<em>La Compra</em></div>
+    <p class="page-desc">
+      Lista para una semana completa + stock de emergencia siempre en casa.
+      <strong>Toca los items para marcarlos como comprados.</strong>
+    </p>
+  </div>
+
+  <div class="shop-grid" id="shop-grid">
+
+    <div class="shop-category">
+      <div class="cat-header"><div class="cat-icon">🥩</div><div class="cat-name">Proteína Animal</div></div>
+      <ul class="shop-items">
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Pechuga de pollo<span class="shop-item-qty">800–1.000g · batch + almuerzos</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Salmón fresco o congelado<span class="shop-item-qty">600–800g · 2–3 cenas</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Merluza o bacalao<span class="shop-item-qty">400–600g · 2 cenas</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Pavo en lonchas (Bonnatur)<span class="shop-item-qty">200g · meriendas y snacks</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Huevos L<span class="shop-item-qty">12 uds · desayunos + batch</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Atún al natural (latas)<span class="shop-item-qty">6 latas · meriendas + emergencia</span></div></li>
+      </ul>
+    </div>
+
+    <div class="shop-category">
+      <div class="cat-header"><div class="cat-icon">🥛</div><div class="cat-name">Lácteos y Proteína</div></div>
+      <ul class="shop-items">
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">YoPRO natural<span class="shop-item-qty">6–8 uds · snacks + emergencia</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Skyr o yogur griego alto en proteína<span class="shop-item-qty">4 uds × 200g · meriendas</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Queso fresco Burgos<span class="shop-item-qty">200g · snacks + meriendas</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Proteína whey o vegana (Naturly)<span class="shop-item-qty">reponer si queda &lt;3 scoops</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Leche desnatada o bebida avena<span class="shop-item-qty">1L · avena + café</span></div></li>
+      </ul>
+    </div>
+
+    <div class="shop-category">
+      <div class="cat-header"><div class="cat-icon">🌾</div><div class="cat-name">Carbohidratos</div></div>
+      <ul class="shop-items">
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Copos de avena<span class="shop-item-qty">500g · desayunos</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Arroz basmati<span class="shop-item-qty">500g · batch + almuerzos</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Quinoa<span class="shop-item-qty">200g · almuerzos</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Tortitas de arroz<span class="shop-item-qty">1 paquete · meriendas</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Pan integral de centeno<span class="shop-item-qty">1 barra · desayunos + meriendas</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Boniato<span class="shop-item-qty">1kg · cenas CF</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Legumbres (garbanzos, lentejas)<span class="shop-item-qty">2 botes cocidos</span></div></li>
+      </ul>
+    </div>
+
+    <div class="shop-category">
+      <div class="cat-header"><div class="cat-icon">🥬</div><div class="cat-name">Verduras y Fruta</div></div>
+      <ul class="shop-items">
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Mezcla de hojas verdes (bolsa)<span class="shop-item-qty">2 bolsas · almuerzos</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Brócoli<span class="shop-item-qty">500g · batch + cenas</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Calabacín<span class="shop-item-qty">2 uds · cenas</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Tomate cherry<span class="shop-item-qty">400g · ensaladas</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Pepino, zanahoria<span class="shop-item-qty">snacks y ensaladas</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Plátanos<span class="shop-item-qty">6 uds · desayunos</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Frutos rojos (fresh o congelados)<span class="shop-item-qty">300g · yogures</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Aguacate<span class="shop-item-qty">3–4 uds · desayunos</span></div></li>
+      </ul>
+    </div>
+
+    <div class="shop-category">
+      <div class="cat-header"><div class="cat-icon">🥑</div><div class="cat-name">Grasas y Condimentos</div></div>
+      <ul class="shop-items">
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Mantequilla de cacahuete<span class="shop-item-qty">reponer si queda poco</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">AOVE (aceite de oliva virgen extra)<span class="shop-item-qty">para cocinar y aliñar</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Nueces o almendras mixtas<span class="shop-item-qty">200g · snacks</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Tahini (pasta sésamo)<span class="shop-item-qty">opcional · aliño Harvard</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Chocolate negro &gt;80%<span class="shop-item-qty">100g · cuadraditos post-comida</span></div></li>
+      </ul>
+    </div>
+
+    <div class="shop-category">
+      <div class="cat-header"><div class="cat-icon">💊</div><div class="cat-name">Suplementos (reponer)</div></div>
+      <ul class="shop-items">
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Creatina monohidrato<span class="shop-item-qty">5g/día · reponer mensual</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Vitamina D3 (2.000–4.000 UI)<span class="shop-item-qty">con almuerzo</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Vitamina B12 (1.000 mcg)<span class="shop-item-qty">con desayuno</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Omega-3 EPA/DHA (2–3g)<span class="shop-item-qty">con almuerzo (grasa)</span></div></li>
+        <li class="shop-item" onclick="toggleItem(this)"><div class="shop-check"></div><div class="shop-item-text">Magnesio bisglicinato (300–400mg)<span class="shop-item-qty">22:00 antes de dormir</span></div></li>
+      </ul>
+    </div>
+
+  </div><!-- /shop-grid -->
+
+  <div class="page-footer">
+    <span>Lista semanal estándar</span>
+    <span>Batch cooking domingo = 60 min = semana resuelta</span>
+  </div>
+</div>
+
+<!-- STICKY PROGRESS BAR -->
+<div class="shop-progress">
+  <span class="shop-prog-label">Completado</span>
+  <div class="shop-prog-bar">
+    <div class="shop-prog-fill" id="shop-bar" style="width:0%"></div>
+  </div>
+  <span class="shop-prog-count" id="shop-count">0 / 36</span>
+  <button class="reset-btn" onclick="resetShop()">Limpiar</button>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 4: EMERGENCIA
+══════════════════════════════════════════════ -->
+<div id="page-emergencia" class="page">
+<div class="container">
+  <div class="page-hero">
+    <div class="tag">Días de estrés · Sin tiempo</div>
+    <div class="page-title">Plan de<em>Emergencia</em></div>
+    <p class="page-desc">
+      Para los días en que todo falla. Estas combinaciones cubren las 2.000 kcal mínimas
+      <strong>sin cocinar nada.</strong> Todo comprable en cualquier super o en casa.
+    </p>
+  </div>
+
+  <div class="emergency-top">
+    Tu media real fue <strong>1.370 kcal/día</strong>. Los días bajos no son de 1.800 — son de 500–900 kcal.
+    Eso no es déficit moderado, es restricción extrema que destruye músculo y sube el cortisol.
+    <strong>Con este plan nunca tienes excusa para bajar de 2.000.</strong>
+  </div>
+
+  <div class="block">
+    <div class="section-label">Combinaciones sin cocinar — elige una</div>
+    <div class="combo-cards">
+
+      <div class="combo-card">
+        <div class="combo-num">01</div>
+        <div class="combo-title">El Clásico Rápido</div>
+        <ul class="combo-foods">
+          <li>3 YoPRO natural</li>
+          <li>1 poke bowl atún (Mercadona)</li>
+          <li>1 plátano + 2 cucharadas MdC</li>
+          <li>2 tostadas + 1 lata atún</li>
+        </ul>
+        <div class="combo-totals">
+          <div class="combo-total-item">
+            <div class="combo-total-label">Kcal</div>
+            <div class="combo-total-val green">~1.800</div>
+          </div>
+          <div class="combo-total-item">
+            <div class="combo-total-label">Proteína</div>
+            <div class="combo-total-val">145g</div>
+          </div>
+          <div class="combo-total-item">
+            <div class="combo-total-label">+ cena</div>
+            <div class="combo-total-val">2.100+</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="combo-card">
+        <div class="combo-num">02</div>
+        <div class="combo-title">El Todo Yogur</div>
+        <ul class="combo-foods">
+          <li>2 YoPRO + frutos rojos + nueces</li>
+          <li>1 poke bowl salmón</li>
+          <li>2 yogures griegos + granola + MdC</li>
+          <li>Plátano + 3 huevos duros (del batch)</li>
+        </ul>
+        <div class="combo-totals">
+          <div class="combo-total-item">
+            <div class="combo-total-label">Kcal</div>
+            <div class="combo-total-val green">~1.750</div>
+          </div>
+          <div class="combo-total-item">
+            <div class="combo-total-label">Proteína</div>
+            <div class="combo-total-val">130g</div>
+          </div>
+          <div class="combo-total-item">
+            <div class="combo-total-label">+ cena</div>
+            <div class="combo-total-val">2.100+</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="combo-card">
+        <div class="combo-num">03</div>
+        <div class="combo-title">El Proteína Total</div>
+        <ul class="combo-foods">
+          <li>Bowl avena + 2 scoops whey + plátano</li>
+          <li>2 latas atún + 4 tortitas arroz</li>
+          <li>3 YoPRO + frutos secos</li>
+          <li>Scoop extra proteína con leche</li>
+        </ul>
+        <div class="combo-totals">
+          <div class="combo-total-item">
+            <div class="combo-total-label">Kcal</div>
+            <div class="combo-total-val green">~1.850</div>
+          </div>
+          <div class="combo-total-item">
+            <div class="combo-total-label">Proteína</div>
+            <div class="combo-total-val">185g</div>
+          </div>
+          <div class="combo-total-item">
+            <div class="combo-total-label">+ cena</div>
+            <div class="combo-total-val">2.200+</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="section-label">Stock mínimo siempre en casa</div>
+    <div class="stock-section">
+      <div class="stock-grid">
+        <div class="stock-row"><div class="stock-dot"></div>YoPRO (mínimo 6 uds)</div>
+        <div class="stock-row"><div class="stock-dot"></div>Atún al natural (6 latas)</div>
+        <div class="stock-row"><div class="stock-dot"></div>Mantequilla de cacahuete</div>
+        <div class="stock-row"><div class="stock-dot"></div>Frutos secos mixtos (200g)</div>
+        <div class="stock-row"><div class="stock-dot"></div>Tortitas de arroz</div>
+        <div class="stock-row"><div class="stock-dot"></div>Proteína en polvo</div>
+        <div class="stock-row"><div class="stock-dot"></div>Copos de avena</div>
+        <div class="stock-row"><div class="stock-dot"></div>Plátanos (siempre)</div>
+        <div class="stock-row"><div class="stock-dot"></div>Yogur griego (4 uds mínimo)</div>
+        <div class="stock-row"><div class="stock-dot"></div>Chocolate negro &gt;80%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="section-label">Las 3 reglas del sistema</div>
+    <div class="rules-list">
+      <div class="rule-row">
+        <div class="rule-n">1</div>
+        <div>
+          <div class="rule-title">Nunca bajar de 2.000 kcal</div>
+          <p class="rule-desc">Es el floor sagrado. No importa el nivel de estrés. Un día bajo no adelgaza — desregula el metabolismo, dispara el cortisol y destruye músculo. Si hay duda, añade un YoPRO o un puñado de nueces.</p>
+        </div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-n">2</div>
+        <div>
+          <div class="rule-title">Desayuno fijo con ≥30g proteína — siempre</div>
+          <p class="rule-desc">Es el ancla del día. Si el desayuno ocurre, el resto del día fluye. Si se salta, la proteína se hunde y el patrón de déficit extremo se repite.</p>
+        </div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-n">3</div>
+        <div>
+          <div class="rule-title">Batch cooking domingos — sin excepción</div>
+          <p class="rule-desc">60 minutos el domingo eliminan el principal disparador de los días bajos. Sin comida preparada no hay sistema que funcione. Es la única acción que más impacto tiene.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Plan de emergencia · Daniel Verín</span>
+    <span>Consistencia 80% > Perfección 50%</span>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 5: CHECKLIST DIARIO
+══════════════════════════════════════════════ -->
+<div id="page-checklist" class="page">
+<div class="container">
+  <div class="page-hero">
+    <div class="tag">Hábitos diarios</div>
+    <div class="page-title">Checklist<em>Del Día</em></div>
+    <p class="page-desc">
+      7 de 10 es un gran día. No busques perfección, busca consistencia.
+      <strong>Resetea cada mañana.</strong>
+    </p>
+  </div>
+
+  <div class="check-summary">
+    <span class="check-sum-label">Progreso</span>
+    <div class="check-sum-bar"><div class="check-sum-fill" id="cl-bar" style="width:0%"></div></div>
+    <span class="check-sum-score" id="cl-score">0/13</span>
+    <span class="check-sum-msg" id="cl-msg">Empieza el día</span>
+    <button class="check-reset-btn" onclick="resetChecklist()">Resetear</button>
+  </div>
+
+  <div class="check-grid">
+
+    <div class="check-block">
+      <div class="check-block-title">☀️ Mañana · 07:00–09:00</div>
+      <ul class="check-items" id="cl-list">
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Respiración diafragmática 5 min
+            <span class="check-item-sub">Box breathing 4-4-4-4 antes de levantarte</span>
+          </div>
+        </li>
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Vaso de agua grande
+            <span class="check-item-sub">Sin mirar el móvil</span>
+          </div>
+        </li>
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Journaling 5–10 min
+            <span class="check-item-sub">3 gratitudes · 1 intención · 1 mejora</span>
+          </div>
+        </li>
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Paseo con los perros 1h
+            <span class="check-item-sub">Sin auriculares los primeros 15 min · luz natural</span>
+          </div>
+        </li>
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Desayuno ≥30g proteína
+            <span class="check-item-sub">Avena + whey · o huevos · o YoPRO</span>
+          </div>
+        </li>
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Creatina 5g + B12
+            <span class="check-item-sub">Con el desayuno, todos los días</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="check-block">
+      <div class="check-block-title">🌤️ Mediodía · 13:00–14:30</div>
+      <ul class="check-items">
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Almuerzo Harvard completo
+            <span class="check-item-sub">Proteína + carbo + verdura grande</span>
+          </div>
+        </li>
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Vitamina D + Omega-3
+            <span class="check-item-sub">Con la comida (necesitan grasa)</span>
+          </div>
+        </li>
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Caminata post-comida 15 min
+            <span class="check-item-sub">Reduce el pico de glucosa hasta un 30%</span>
+          </div>
+        </li>
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Último café antes de las 14:00
+            <span class="check-item-sub">A partir de aquí solo agua o infusiones</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="check-block">
+      <div class="check-block-title">🌙 Tarde-noche · 17:00–23:00</div>
+      <ul class="check-items">
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Merienda o pre-WOD
+            <span class="check-item-sub">Tortitas + atún · o yogur + fruta</span>
+          </div>
+        </li>
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Entreno o movilidad según el día
+            <span class="check-item-sub">CF / Running / Foam roller + estiramientos</span>
+          </div>
+        </li>
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Cena con proteína + verdura
+            <span class="check-item-sub">Última comida del día</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="check-block">
+      <div class="check-block-title">🌑 Protocolo nocturno · 22:00–23:00</div>
+      <ul class="check-items">
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Digital sunset — pantallas fuera a las 22:00
+            <span class="check-item-sub">Móvil, tablet, TV. Modo noche si es urgente.</span>
+          </div>
+        </li>
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Magnesio bisglicinato 300–400mg
+            <span class="check-item-sub">Con agua, antes de la meditación</span>
+          </div>
+        </li>
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Meditación body scan 10 min
+            <span class="check-item-sub">Headspace · Calm · Insight Timer</span>
+          </div>
+        </li>
+        <li class="check-item" onclick="toggleCheck(this)">
+          <div class="check-box"></div>
+          <div class="check-item-label">Luces fuera a las 23:00
+            <span class="check-item-sub">Habitación 18–20°C · oscura · sin ruido</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div style="background:var(--card); border:1px solid var(--border); padding:18px 24px; font-size:13px; color:var(--muted); line-height:1.7;">
+    <strong style="color:var(--text)">Regla del 7/10:</strong> Si marcas 7 o más items, es un gran día. No necesitas el 10/10. La perfección no es el objetivo — la consistencia sí. Un día de 6/10 no arruina la semana.
+  </div>
+
+  <div class="page-footer">
+    <span>Checklist diario · Daniel Verín</span>
+    <span>Resetea cada mañana</span>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 6: BIOHACKING & SUEÑO
+══════════════════════════════════════════════ -->
+<div id="page-biohacking" class="page">
+<div class="container">
+  <div class="page-hero">
+    <div class="tag">Protocolos de rendimiento</div>
+    <div class="page-title">Biohacking<em>& Sueño</em></div>
+    <p class="page-desc">
+      Pequeños hábitos con impacto enorme en energía, testosterona, sueño y composición corporal.
+      <strong>Todos integrados en tu rutina diaria.</strong>
+    </p>
+  </div>
+
+  <!-- PROTOCOLO NOCTURNO COMPLETO -->
+  <div class="block">
+    <div class="section-label">Protocolo nocturno completo</div>
+    <div class="bio-protocol">
+      <div class="bio-protocol-title">🌙 Rutina 22:00 → 23:00</div>
+      <div class="bio-steps">
+        <div class="bio-step">
+          <div class="bio-step-time">22:00</div>
+          <div class="bio-step-text"><strong>Digital sunset.</strong> Pantallas fuera — móvil, tablet, TV. La luz azul suprime la melatonina hasta un 50%. Si necesitas el móvil: modo noche + brillo mínimo. Sustituye por lectura, estiramientos o conversación.</div>
+        </div>
+        <div class="bio-step">
+          <div class="bio-step-time">22:00</div>
+          <div class="bio-step-text"><strong>Magnesio bisglicinato 300–400mg.</strong> Relaja el sistema nervioso, mejora la calidad del sueño profundo y reduce el cortisol nocturno. Con agua, no con comida.</div>
+        </div>
+        <div class="bio-step">
+          <div class="bio-step-time">22:00</div>
+          <div class="bio-step-text"><strong>Luz tenue.</strong> Nada de LED blanco. Lámpara cálida o vela. Tu cerebro interpreta la oscuridad como señal de que es hora de dormir.</div>
+        </div>
+        <div class="bio-step">
+          <div class="bio-step-time">22:15</div>
+          <div class="bio-step-text"><strong>Meditación body scan 10 min.</strong> Baja la activación del sistema nervioso simpático. Mejora la latencia del sueño y la calidad del descanso. Apps: Headspace, Calm, Insight Timer, Waking Up.</div>
+        </div>
+        <div class="bio-step">
+          <div class="bio-step-time">22:30</div>
+          <div class="bio-step-text"><strong>Lectura o estiramientos suaves.</strong> Nada estimulante. Novela, no noticias. Estiramientos de cadera y thoracic si has entrenado.</div>
+        </div>
+        <div class="bio-step">
+          <div class="bio-step-time">23:00</div>
+          <div class="bio-step-text"><strong>Luces fuera.</strong> Habitación fría (18–20°C), completamente oscura, sin ruido. El frío facilita la bajada de temperatura corporal necesaria para el sueño profundo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HÁBITOS DE RENDIMIENTO -->
+  <div class="block">
+    <div class="section-label">Hábitos de alto impacto</div>
+    <div class="bio-grid">
+
+      <div class="bio-card">
+        <div class="bio-icon">🌅</div>
+        <div class="bio-card-title">Luz solar matutina</div>
+        <div class="bio-time">07:30 · Durante el paseo</div>
+        <div class="bio-desc">10–15 min de luz natural en los ojos al despertar. Ya lo haces con el paseo de los perros. Regula el ritmo circadiano, dispara el cortisol matutino (cuando lo necesitas) y prepara la producción de melatonina para esa noche.</div>
+        <div class="bio-how">Sin gafas de sol los primeros 15 min. No hace falta mirar al sol directamente — basta con estar al aire libre.</div>
+      </div>
+
+      <div class="bio-card">
+        <div class="bio-icon">🫁</div>
+        <div class="bio-card-title">Respiración diafragmática</div>
+        <div class="bio-time">07:00 · Al despertar, antes de todo</div>
+        <div class="bio-desc">5 min de box breathing al despertar: inhalar 4s → retener 4s → exhalar 4s → retener 4s. Activa el parasimpático, reduce el cortisol matutino excesivo y mejora la variabilidad de frecuencia cardíaca (HRV).</div>
+        <div class="bio-how">Tumbado en la cama antes de levantarte. 5 min son ~15 ciclos. Es el hábito con mayor ROI por minuto invertido.</div>
+      </div>
+
+      <div class="bio-card">
+        <div class="bio-icon">📓</div>
+        <div class="bio-card-title">Journaling matutino</div>
+        <div class="bio-time">07:15 · Antes del paseo</div>
+        <div class="bio-desc">5–10 min antes de mirar el móvil. Formato simple: 3 gratitudes, 1 intención del día, 1 área de mejora. Reduce ansiedad, mejora el enfoque y te conecta con tus prioridades antes de que el ruido externo entre.</div>
+        <div class="bio-how">No hace falta escribir mucho. 3 líneas por punto están bien. Lo que importa es hacerlo antes de abrir el móvil.</div>
+      </div>
+
+      <div class="bio-card">
+        <div class="bio-icon">🚶</div>
+        <div class="bio-card-title">Caminatas post-comida</div>
+        <div class="bio-time">13:30 + 21:00 · Tras cada comida</div>
+        <div class="bio-desc">15 min caminando después de almuerzo y cena. Reduce el pico de glucosa hasta un 30%, mejora la digestión, baja el cortisol y contribuye al NEAT diario. Uno de los hacks con mejor relación esfuerzo/resultado.</div>
+        <div class="bio-how">No necesitas ritmo. Un paseo tranquilo vale. En oficina: da una vuelta al bloque o baja por las escaleras.</div>
+      </div>
+
+      <div class="bio-card">
+        <div class="bio-icon">🧊</div>
+        <div class="bio-card-title">Contraste frío/calor</div>
+        <div class="bio-time">Post-entreno · Opcional</div>
+        <div class="bio-desc">Ducha fría 2–3 min al final de la ducha post-WOD. Reduce inflamación aguda, mejora la recuperación muscular y tiene un efecto potente sobre la dopamina y el estado de ánimo. No hace falta ducha escocesa completa.</div>
+        <div class="bio-how">Termina la ducha con 60–90 segundos de agua fría. Suficiente para el efecto. Si tienes acceso a sauna + frío, mucho mejor.</div>
+      </div>
+
+      <div class="bio-card">
+        <div class="bio-icon">🧘</div>
+        <div class="bio-card-title">Meditación nocturna</div>
+        <div class="bio-time">22:15 · Después de dejar pantallas</div>
+        <div class="bio-desc">10 min de body scan o meditación guiada antes de dormir. Baja la activación del sistema nervioso simpático. Mejora la latencia del sueño y la calidad del descanso profundo donde ocurre la recuperación real.</div>
+        <div class="bio-how">Apps recomendadas: Headspace (Sleep), Calm (Daily Calm), Insight Timer (gratis), Waking Up (más avanzado).</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TESTOSTERONA -->
+  <div class="block">
+    <div class="section-label">Testosterona natural</div>
+    <div class="bio-note">
+      <strong>No hay suplemento mágico.</strong> La testosterona se optimiza con los básicos bien hechos: dormir 7–8h (la producción ocurre mayoritariamente durante el sueño profundo), entrenar fuerza pesada (lo haces con CrossFit), mantener grasa corporal en rango saludable (estamos en ello), gestionar el estrés (meditación + respiración) y asegurar micronutrientes clave (vitamina D, zinc, magnesio — ya los tienes cubiertos).<br><br>
+      <strong>Hazte una analítica de testosterona total y libre en 6–8 semanas</strong> para tener un baseline real. También: tiroides, vit D, hierro, ferritina y B12.
+    </div>
+  </div>
+
+  <!-- MONITORIZACIÓN -->
+  <div class="block">
+    <div class="section-label">Monitorización diaria con el reloj</div>
+    <div class="rules-list">
+      <div class="rule-row">
+        <div class="rule-n">↑</div>
+        <div>
+          <div class="rule-title">HRV alto + FC reposo normal → día normal o intenso</div>
+          <p class="rule-desc">Señal de que estás recuperado. Puedes entrenar con intensidad, subir carga o añadir cardio extra.</p>
+        </div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-n">↓</div>
+        <div>
+          <div class="rule-title">HRV bajo o FC reposo elevada → día suave</div>
+          <p class="rule-desc">Señal de estrés acumulado, sueño insuficiente o inicio de enfermedad. Reduce volumen, no calorías. Un día de movilidad vale más que un WOD a medio gas.</p>
+        </div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-n">📊</div>
+        <div>
+          <div class="rule-title">Analítica cada 3 meses</div>
+          <p class="rule-desc">Testosterona total y libre, tiroides (TSH, T3, T4), vitamina D, hierro + ferritina, B12. Es la única forma de saber si el plan funciona a nivel hormonal y metabólico.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Biohacking & Sueño · Daniel Verín</span>
+    <span>Sin sueño no hay recuperación ni pérdida de grasa eficiente</span>
+  </div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     PAGE 7: DASHBOARD DE SEGUIMIENTO
+══════════════════════════════════════════════ -->
+<div id="page-dashboard" class="page">
+<div class="container">
+  <div class="page-hero">
+    <div class="tag">Seguimiento semanal</div>
+    <div class="page-title">Dashboard<em>Progreso</em></div>
+    <p class="page-desc">
+      Registra 2–3 veces por semana. Solo la tendencia importa.
+      <strong>Objetivo: –0.3 kg/semana · cintura bajando · energía estable.</strong>
+    </p>
+  </div>
+
+  <!-- INPUT FORM -->
+  <div class="block">
+    <div class="section-label">Registrar entrada de hoy</div>
+    <div class="dash-grid">
+
+      <div class="dash-card">
+        <div class="dash-card-label">Peso (en ayunas)</div>
+        <div class="dash-input-row">
+          <input class="dash-input" type="number" id="inp-peso" placeholder="90.0" step="0.1" min="70" max="120">
+          <span class="dash-unit">kg</span>
+        </div>
+        <div class="dash-delta" id="delta-peso">Introduce tu peso</div>
+      </div>
+
+      <div class="dash-card">
+        <div class="dash-card-label">Cintura (altura ombligo, en ayunas)</div>
+        <div class="dash-input-row">
+          <input class="dash-input" type="number" id="inp-cintura" placeholder="90" step="0.5" min="60" max="130">
+          <span class="dash-unit">cm</span>
+        </div>
+        <div class="dash-delta" id="delta-cintura">Introduce tu cintura</div>
+      </div>
+
+      <div class="dash-card">
+        <div class="dash-card-label">Energía al despertar (1–10)</div>
+        <div class="dash-energy" id="energy-btns">
+          <button class="energy-btn" onclick="selectEnergy(1)">1</button>
+          <button class="energy-btn" onclick="selectEnergy(2)">2</button>
+          <button class="energy-btn" onclick="selectEnergy(3)">3</button>
+          <button class="energy-btn" onclick="selectEnergy(4)">4</button>
+          <button class="energy-btn" onclick="selectEnergy(5)">5</button>
+          <button class="energy-btn" onclick="selectEnergy(6)">6</button>
+          <button class="energy-btn" onclick="selectEnergy(7)">7</button>
+          <button class="energy-btn" onclick="selectEnergy(8)">8</button>
+          <button class="energy-btn" onclick="selectEnergy(9)">9</button>
+          <button class="energy-btn" onclick="selectEnergy(10)">10</button>
+        </div>
+        <div class="dash-delta" id="delta-energia" style="margin-top:8px">Selecciona tu nivel de energía</div>
+      </div>
+
+      <div class="dash-card">
+        <div class="dash-card-label">Proteína del día (g)</div>
+        <div class="dash-input-row">
+          <input class="dash-input" type="number" id="inp-prot" placeholder="175" step="5" min="0" max="300">
+          <span class="dash-unit">g</span>
+        </div>
+        <div class="dash-prot-bar"><div class="dash-prot-fill" id="prot-bar" style="width:0%"></div></div>
+        <div class="dash-prot-label">
+          <span>0g</span>
+          <span id="prot-pct">— / 175g objetivo</span>
+          <span>175g+</span>
+        </div>
+      </div>
+
+    </div>
+    <button class="dash-log-btn" onclick="logEntry()">GUARDAR ENTRADA</button>
+  </div>
+
+  <!-- HISTORIAL -->
+  <div class="block">
+    <div class="section-label">Historial de registros</div>
+    <div class="dash-history">
+      <div class="dash-history-header">
+        <span>Registros guardados (sesión actual)</span>
+        <button class="dash-history-clear" onclick="clearDash()">Limpiar</button>
+      </div>
+      <div id="dash-table-wrap">
+        <div class="dash-empty">Aún no hay registros. Introduce tu primer dato arriba.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MÉTRICAS CLAVE -->
+  <div class="block">
+    <div class="section-label">Qué mirar cada 2 semanas</div>
+    <div class="rules-list">
+      <div class="rule-row">
+        <div class="rule-n" style="font-size:24px">⚖️</div>
+        <div>
+          <div class="rule-title">Peso — media semanal, no el dato diario</div>
+          <p class="rule-desc">Pésate 2–3 veces en ayunas. Calcula la media. El objetivo es –0.3 kg/semana. Un día +0.5 kg no significa nada — puede ser agua, sal, digestión.</p>
+        </div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-n" style="font-size:24px">📏</div>
+        <div>
+          <div class="rule-title">Cintura — el indicador más fiable</div>
+          <p class="rule-desc">A la altura del ombligo, en ayunas, por la mañana. Si la cintura baja aunque el peso se mantenga, estás perdiendo grasa y ganando músculo. Esto es recomposición corporal real.</p>
+        </div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-n" style="font-size:24px">⚡</div>
+        <div>
+          <div class="rule-title">Energía — señal de alerta temprana</div>
+          <p class="rule-desc">Si la media semanal de energía baja de 6 → algo necesita ajuste. Revisa sueño primero, luego calorías, luego volumen de entrenamiento. En ese orden.</p>
+        </div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-n" style="font-size:24px">🏋️</div>
+        <div>
+          <div class="rule-title">Rendimiento en el box</div>
+          <p class="rule-desc">Si tus marcas se mantienen o suben en déficit → lo estás haciendo bien. Si bajan más de 2 semanas seguidas → revisa sueño y calorías antes de tocar nada más.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Dashboard · Daniel Verín</span>
+    <span>Evalúa cada 2 semanas · no cada día</span>
+  </div>
+</div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// STORAGE HELPERS — localStorage
+// ══════════════════════════════════════════════
+const LS = {
+  get: (k, fb) => { try { const v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : fb; } catch(e) { return fb; } },
+  set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} },
+  del: (k) => { try { localStorage.removeItem(k); } catch(e) {} }
+};
+
+// ─── NAVIGATION ───
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ─── WEEK TABS ───
+function showWeek(id, btn) {
+  document.querySelectorAll('[id^="week-"]').forEach(w => w.style.display = 'none');
+  document.querySelectorAll('.week-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('week-' + id).style.display = 'grid';
+  btn.classList.add('active');
+}
+
+// ══════════════════════════════════════════════
+// SHOPPING LIST — persiste indefinidamente
+// ══════════════════════════════════════════════
+const TOTAL_ITEMS = document.querySelectorAll('.shop-item').length;
+
+function updateShopProgress() {
+  const checked = document.querySelectorAll('.shop-item.checked').length;
+  const pct = Math.round((checked / TOTAL_ITEMS) * 100);
+  document.getElementById('shop-bar').style.width = pct + '%';
+  document.getElementById('shop-count').textContent = checked + ' / ' + TOTAL_ITEMS;
+}
+
+function loadShop() {
+  const saved = LS.get('shop_checked', []);
+  document.querySelectorAll('.shop-item').forEach((el, i) => {
+    if (saved.includes(i)) el.classList.add('checked');
+  });
+  updateShopProgress();
+}
+
+function saveShop() {
+  const checked = [];
+  document.querySelectorAll('.shop-item').forEach((el, i) => {
+    if (el.classList.contains('checked')) checked.push(i);
+  });
+  LS.set('shop_checked', checked);
+}
+
+function toggleItem(el) {
+  el.classList.toggle('checked');
+  updateShopProgress();
+  saveShop();
+}
+
+function resetShop() {
+  document.querySelectorAll('.shop-item').forEach(el => el.classList.remove('checked'));
+  updateShopProgress();
+  LS.del('shop_checked');
+}
+
+// ══════════════════════════════════════════════
+// CHECKLIST — se resetea automáticamente cada día
+// ══════════════════════════════════════════════
+const TOTAL_CHECKS = 16;
+
+function loadChecklist() {
+  const today = new Date().toDateString();
+  const savedDay = LS.get('cl_date', '');
+  if (savedDay !== today) {
+    LS.set('cl_date', today);
+    LS.del('cl_state');
+  }
+  const saved = LS.get('cl_state', []);
+  document.querySelectorAll('.check-item').forEach((el, i) => {
+    if (saved.includes(i)) el.classList.add('done');
+  });
+  updateChecklist();
+}
+
+function saveChecklist() {
+  const done = [];
+  document.querySelectorAll('.check-item').forEach((el, i) => {
+    if (el.classList.contains('done')) done.push(i);
+  });
+  LS.set('cl_state', done);
+}
+
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  updateChecklist();
+  saveChecklist();
+}
+
+function updateChecklist() {
+  const done = document.querySelectorAll('.check-item.done').length;
+  const pct = Math.round((done / TOTAL_CHECKS) * 100);
+  document.getElementById('cl-bar').style.width = pct + '%';
+  document.getElementById('cl-score').textContent = done + '/' + TOTAL_CHECKS;
+  const msgs = ['Empieza el día 👋','Sigue así','Buen comienzo','Buen comienzo','A la mitad','Más de la mitad 💪','Buen día','¡Gran día! 🙌','Excelente 🔥','Casi perfecto','Perfecto 🔥','Élite 🔥','Increíble 🔥','¡Imparable! 🔥','Máximo nivel 🔥','Leyenda 🔥','¡10/10! 🏆'];
+  document.getElementById('cl-msg').textContent = msgs[Math.min(done, msgs.length - 1)];
+}
+
+function resetChecklist() {
+  document.querySelectorAll('.check-item').forEach(el => el.classList.remove('done'));
+  updateChecklist();
+  LS.del('cl_state');
+  LS.del('cl_date');
+}
+
+// ══════════════════════════════════════════════
+// INIT — carga todo al arrancar
+// ══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  loadShop();
+  loadChecklist();
+  dashData = LS.get('dash_data', []);
+  renderDashTable();
+});
+
+// ─── DASHBOARD ───
+let dashData = [];
+let selectedEnergy = null;
+
+function selectEnergy(val) {
+  selectedEnergy = val;
+  document.querySelectorAll('.energy-btn').forEach((b, i) => {
+    b.classList.toggle('selected', i + 1 === val);
+  });
+  const msgs = ['', 'Muy baja 😴', 'Baja 😴', 'Regular 😐', 'Regular 😐', 'Normal 🙂', 'Normal 🙂', 'Buena 💪', 'Buena 💪', 'Muy buena 🔥', 'Máxima energía 🔥'];
+  document.getElementById('delta-energia').textContent = msgs[val];
+}
+
+document.getElementById('inp-prot').addEventListener('input', function() {
+  const v = parseFloat(this.value) || 0;
+  const pct = Math.min((v / 175) * 100, 100);
+  document.getElementById('prot-bar').style.width = pct + '%';
+  document.getElementById('prot-pct').textContent = v + 'g / 175g objetivo';
+});
+
+document.getElementById('inp-peso').addEventListener('input', function() {
+  const v = parseFloat(this.value);
+  if (!v) return;
+  const last = dashData.filter(d => d.peso).slice(-1)[0];
+  if (last) {
+    const diff = (v - last.peso).toFixed(1);
+    const el = document.getElementById('delta-peso');
+    el.textContent = (diff > 0 ? '+' : '') + diff + ' kg vs última entrada';
+    el.className = 'dash-delta ' + (diff <= 0 ? 'good' : 'bad');
+  }
+});
+
+document.getElementById('inp-cintura').addEventListener('input', function() {
+  const v = parseFloat(this.value);
+  if (!v) return;
+  const last = dashData.filter(d => d.cintura).slice(-1)[0];
+  if (last) {
+    const diff = (v - last.cintura).toFixed(1);
+    const el = document.getElementById('delta-cintura');
+    el.textContent = (diff > 0 ? '+' : '') + diff + ' cm vs última entrada';
+    el.className = 'dash-delta ' + (diff <= 0 ? 'good' : 'bad');
+  }
+});
+
+function logEntry() {
+  const peso = parseFloat(document.getElementById('inp-peso').value) || null;
+  const cintura = parseFloat(document.getElementById('inp-cintura').value) || null;
+  const prot = parseInt(document.getElementById('inp-prot').value) || null;
+  const energia = selectedEnergy;
+
+  if (!peso && !cintura && !energia && !prot) {
+    alert('Introduce al menos un dato antes de guardar.');
+    return;
+  }
+
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit' });
+  const dayStr = now.toLocaleDateString('es-ES', { weekday: 'short' });
+
+  dashData.unshift({ date: dateStr, day: dayStr, peso, cintura, energia, prot });
+  LS.set('dash_data', dashData);
+  renderDashTable();
+
+  // Reset
+  document.getElementById('inp-peso').value = '';
+  document.getElementById('inp-cintura').value = '';
+  document.getElementById('inp-prot').value = '';
+  document.getElementById('prot-bar').style.width = '0%';
+  document.getElementById('prot-pct').textContent = '— / 175g objetivo';
+  document.getElementById('delta-peso').textContent = 'Guardado ✓';
+  document.getElementById('delta-peso').className = 'dash-delta good';
+  document.getElementById('delta-cintura').textContent = '';
+  document.getElementById('delta-energia').textContent = '';
+  selectedEnergy = null;
+  document.querySelectorAll('.energy-btn').forEach(b => b.classList.remove('selected'));
+}
+
+function renderDashTable() {
+  if (dashData.length === 0) {
+    document.getElementById('dash-table-wrap').innerHTML = '<div class="dash-empty">Aún no hay registros. Introduce tu primer dato arriba.</div>';
+    return;
+  }
+
+  let rows = dashData.map((d, i) => {
+    const prev = dashData[i + 1];
+    let pesoTrend = '';
+    if (d.peso && prev && prev.peso) {
+      const diff = d.peso - prev.peso;
+      if (diff < -0.1) pesoTrend = '<span class="dash-trend trend-down">↓ ' + diff.toFixed(1) + '</span>';
+      else if (diff > 0.1) pesoTrend = '<span class="dash-trend trend-up">↑ +' + diff.toFixed(1) + '</span>';
+      else pesoTrend = '<span class="dash-trend trend-eq">= estable</span>';
+    }
+
+    const energyColor = d.energia >= 7 ? 'color:var(--accent3)' : d.energia <= 4 ? 'color:var(--accent)' : 'color:var(--accent2)';
+
+    return `<tr>
+      <td><strong>${d.date}</strong> <span style="color:var(--muted);font-size:11px">${d.day}</span></td>
+      <td>${d.peso ? d.peso + ' kg ' + pesoTrend : '<span style="color:var(--muted)">—</span>'}</td>
+      <td>${d.cintura ? d.cintura + ' cm' : '<span style="color:var(--muted)">—</span>'}</td>
+      <td>${d.energia ? '<span style="font-weight:600;' + energyColor + '">' + d.energia + '/10</span>' : '<span style="color:var(--muted)">—</span>'}</td>
+      <td>${d.prot ? d.prot + 'g' + (d.prot >= 170 ? ' ✓' : '') : '<span style="color:var(--muted)">—</span>'}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('dash-table-wrap').innerHTML = `
+    <table class="dash-log-table">
+      <thead><tr><th>Fecha</th><th>Peso</th><th>Cintura</th><th>Energía</th><th>Proteína</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+function clearDash() {
+  if (confirm('¿Borrar todos los registros del dashboard? Esta acción no se puede deshacer.')) {
+    dashData = [];
+    LS.del('dash_data');
+    renderDashTable();
+  }
+}
+</script>
+</body>
+</html>
